@@ -17,14 +17,14 @@ nave_inimiga = pygame.image.load("C:/Users/helen/OneDrive/Desktop/jogo python/im
 pos_x_jogador = 420
 pos_y_jogador = 400
 # velocidade de movimeto da nave, qnd apertar algm tecla
-vel_nave_jogador = 2
+vel_nave_jogador = 10
 
 
 
 # posicao nave inimiga
 pos_x_inimigo = 420
 pos_y_inimigo = 100
-vel_nave_inimga = 2
+vel_nave_inimga = 10
 # problema 1 -> a janela de exibicao abre, mas fecha imediatamente. PARA RESOLVER: (criar um loop para rodar sempre o codigo)
 
 loop = True
@@ -35,22 +35,33 @@ while loop:
     # adicionar o botao para fechar a janela de exibicao
     if events.type == pygame.QUIT:
       loop = False
+  
 
-  teclas = pygame.key.get_pressed()
+    teclas = pygame.key.get_pressed()
 
-  # MOVIMENTAÇÃO JOGADOR 
-  # direção: CIMA
-  if teclas[pygame.K_UP]:
-    pos_y_jogador -= vel_nave_jogador
-  # direção: BAIXO
-  if teclas[pygame.K_DOWN]:
-    pos_y_jogador += vel_nave_jogador
-  # direção: ESQUERDA
-  if teclas[pygame.K_LEFT]:
-    pos_x_jogador -= vel_nave_jogador
-  # direção: DIREITA
-  if teclas[pygame.K_RIGHT]:
-    pos_x_jogador += vel_nave_jogador
+    # MOVIMENTAÇÃO JOGADOR 
+    # direção: CIMA
+    if teclas[pygame.K_UP]:
+      pos_y_jogador -= vel_nave_jogador
+    # direção: BAIXO
+    if teclas[pygame.K_DOWN]:
+      pos_y_jogador += vel_nave_jogador
+    # direção: ESQUERDA
+    if teclas[pygame.K_LEFT]:
+      pos_x_jogador -= vel_nave_jogador
+    # direção: DIREITA
+    if teclas[pygame.K_RIGHT]:
+      pos_x_jogador += vel_nave_jogador
+
+  # criando barreiras para a nave
+    if pos_y_jogador <= -10:
+      pos_y_jogador = -10
+    if pos_y_jogador >= 440:
+      pos_y_jogador = 440
+    if pos_x_jogador <= 0:
+      pos_x_jogador = 0
+    if pos_x_jogador >= 850:
+      pos_x_jogador = 850
 
 
 
@@ -61,6 +72,12 @@ while loop:
   janela.blit(imagem_fundo, (0, 0)) 
   janela.blit(nave_jogador, (pos_x_jogador, pos_y_jogador))
   janela.blit(nave_inimiga, (pos_x_inimigo, pos_y_inimigo)) 
+
+  
+
+
+
+
 
 
 
