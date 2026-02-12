@@ -46,6 +46,10 @@ vel_missil = 10
 # CONTROLE DE tiro
 tiro_disparado = False
 
+# FLAGS DE COLISÃO
+colisao_tiro = False
+colisao_jogador = False
+
 pontuacao = 0
 
 contador_inimigo = 0
@@ -55,24 +59,32 @@ def colisoes():
     global pontuacao
     global pos_y_inimigo
     global pos_x_inimigo
+    global tiro_disparado
+    global colisao_tiro
+    global colisao_jogador
 
     # se o jogador principal colidir com a nave_inimiga
-    if jogador_rect.colliderect(inimigo_rect) or inimigo_rect.y > 500:
+    if (jogador_rect.colliderect(inimigo_rect) or inimigo_rect.y > 500) and not colisao_jogador:
         pontuacao -= 1
+        colisao_jogador = True
         print(pontuacao)
         return True
-    elif tiro_rect.colliderect(inimigo_rect):
+
+    # tiro acertou o inimigo
+    elif tiro_rect.colliderect(inimigo_rect) and not colisao_jogador:
         pontuacao += 1
-        pos_y_inimigo -= 1200
-        if pos_y_inimigo < -1000:
-            random_y = randint(50,258)
-            random_x = randint(1, 870)
-            pos_y_inimigo = random_y
-            pos_x_inimigo = random_x
+        pos_y_inimigo = -500
+        pos_x_inimigo = randint(1, 870)
+        tiro_disparado =  False
+        pos_y_missil = pos_y_jogador
+        pos_x_missil = pos_x_jogador
+        colisao_tiro = True
         print(pontuacao)
         return True
 
     else:
+        colisao_jogador = False
+        colisao_tiro = False
         return False
 
 def resultado():
